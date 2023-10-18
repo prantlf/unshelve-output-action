@@ -39,15 +39,18 @@ runs:
       path: ${{ steps.setup-unshelve.outputs.name }}-linux-x64.zip
       key: ${{ steps.setup-unshelve.outputs.name }}-linux-x64.zip-${{ github.sha }}
       fail-on-cache-miss: true
+      enableCrossOsArchive: true
   - name: Extract macOS archive from cache
     uses: actions/cache/restore@v3
     with:
       path: ${{ steps.setup-unshelve.outputs.name }}-macos-x64.zip
       key: ${{ steps.setup-unshelve.outputs.name }}-macos-x64.zip-${{ github.sha }}
       fail-on-cache-miss: true
+      enableCrossOsArchive: true
   - name: Extract Windows archive from cache
     uses: actions/cache/restore@v3
     with:
       path: ${{ steps.setup-unshelve.outputs.name }}-windows-x64.zip
       key: ${{ steps.setup-unshelve.outputs.name }}-windows-x64.zip-${{ github.sha }}
       fail-on-cache-miss: true
+      enableCrossOsArchive: true
