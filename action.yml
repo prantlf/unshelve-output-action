@@ -1,0 +1,53 @@
+name: 'Unshelve Build Output'
+description: 'GitHub action for unshelving a build output from the cache shelved there by shelve-output-action before creating a release.'
+author: prantlf
+
+branding:
+  icon: package
+  color: blue
+
+inputs:
+  name:
+    description: >-
+      The name of the archive without the platform and architecture and without the `.zip` extension. The project name from `v.mod` will be used by default. The name of the archive will be `{name}-{os}-{arch}.zip`, for example: `newchanges-linux-x64.zip`.
+
+runs:
+  using: 'composite'
+  steps:
+  - name: Check platform and architecture
+    if: ${{ runner.os != 'Linux' && runner.os != 'macOS' && runner.os != 'Windows' || runner.arch != 'X64' }}
+    env:
+      SO_PLAT: ${{ runner.os }}
+      SO_ARCH: ${{ inputs.sha256sum }}
+    shell: bash
+    run: |
+      echo "::error title=⛔ Unsupported platform or architecture: $SO_PLAT-$SO_ARCH error hint::Supported are Linux, macOS, Windows on X64"
+      exit 1
+  - name: Setup parameters
+    id: setup-unshelve
+    env:
+      SO_NAME: ${{ inputs.name }}
+    shell: bash
+    run: |
+      if [[ "$SO_NAME" == "" ]]; then
+        SO_NAME=$(node -e "console.log(/^.*name: *['\"]([^'\"]+)['\"].*$/mg.exec(require('fs').readFileSync('v.mod', 'utf8'))[1])")
+      fi
+      echo "name=$SO_NAME" >> $GITHUB_OUTPUT
+  - name: Extract Linux archive from cache
+    uses: actions/cache/restore@v3
+    with:
+      path: ${{ steps.setup-unshelve.outputs.name }}-linux-x64.zip
+      key: ${{ steps.setup-unshelve.outputs.name }}-linux-x64.zip-${{ github.sha }}
+      fail-on-cache-miss: true
+  - name: Extract macOS archive from cache
+    uses: actions/cache/restore@v3
+    with:
+      path: ${{ steps.setup-unshelve.outputs.name }}-macos-x64.zip
+      key: ${{ steps.setup-unshelve.outputs.name }}-macos-x64.zip-${{ github.sha }}
+      fail-on-cache-miss: true
+  - name: Extract Windows archive from cache
+    uses: actions/cache/restore@v3
+    with:
+      path: ${{ steps.setup-unshelve.outputs.name }}-windows-x64.zip
+      key: ${{ steps.setup-unshelve.outputs.name }}-windows-x64.zip-${{ github.sha }}
+      fail-on-cache-miss: true

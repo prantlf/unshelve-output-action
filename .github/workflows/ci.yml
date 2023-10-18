@@ -1,0 +1,50 @@
+name: Test or Release
+
+on:
+  push:
+    branches:
+      - master
+    tags-ignore:
+      - '**'
+    paths-ignore:
+      - '**/*.md'
+      - LICENSE
+  pull_request:
+
+jobs:
+
+  linux:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout sources
+      uses: actions/checkout@v4
+    - name: Pack test archive
+      uses: prantlf/shelve-output-action@v1
+
+  macos:
+    runs-on: macos-latest
+    steps:
+    - name: Checkout sources
+      uses: actions/checkout@v4
+    - name: Pack test archive
+      uses: prantlf/shelve-output-action@v1
+
+  windows:
+    runs-on: windows-latest
+    steps:
+    - name: Checkout sources
+      uses: actions/checkout@v4
+    - name: Pack test archive
+      uses: prantlf/shelve-output-action@v1
+
+  release:
+    needs:
+      - linux
+      - macos
+      - windows
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout sources
+      uses: actions/checkout@v4
+    - name: Test defaults
+      uses: ./
