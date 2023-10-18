@@ -18,26 +18,47 @@ jobs:
     steps:
     - name: Checkout sources
       uses: actions/checkout@v4
-    - name: Pack test archive
-      uses: prantlf/shelve-output-action@v1
+    - name: Simulate test archive
+      shell: bash
+      run: cp LICENSE LICENSE-linux-x64.zip
+    - name: Store test archive
+      uses: actions/cache/save@v3
+      with:
+        path: LICENSE-linux-x64.zip
+        key: LICENSE-linux-x64.zip-${{ github.sha }}
+        enableCrossOsArchive: true
 
   macos:
     runs-on: macos-latest
     steps:
     - name: Checkout sources
       uses: actions/checkout@v4
-    - name: Pack test archive
-      uses: prantlf/shelve-output-action@v1
+    - name: Simulate test archive
+      shell: bash
+      run: cp LICENSE LICENSE-macos-x64.zip
+    - name: Store test archive
+      uses: actions/cache/save@v3
+      with:
+        path: LICENSE-macos-x64.zip
+        key: LICENSE-macos-x64.zip-${{ github.sha }}
+        enableCrossOsArchive: true
 
   windows:
     runs-on: windows-latest
     steps:
     - name: Checkout sources
       uses: actions/checkout@v4
-    - name: Pack test archive
-      uses: prantlf/shelve-output-action@v1
+    - name: Simulate test archive
+      shell: powershell
+      run: Copy-Item "LICENSE" -Destination "LICENSE-windows-x64.zip"
+    - name: Store test archive
+      uses: actions/cache/save@v3
+      with:
+        path: LICENSE-windows-x64.zip
+        key: LICENSE-windows-x64.zip-${{ github.sha }}
+        enableCrossOsArchive: true
 
-  release:
+  test:
     needs:
       - linux
       - macos
@@ -48,3 +69,18 @@ jobs:
       uses: actions/checkout@v4
     - name: Test defaults
       uses: ./
+    - name: Check archives
+      shell: bash
+      run: |
+        if [ ! -f "LICENSE-linux-x64.zip" ]; then
+          echo "LICENSE-linux-x64.zip does not exist"
+          exit 1
+        fi
+        if [ ! -f "LICENSE-macos-x64.zip" ]; then
+          echo "LICENSE-macos-x64.zip does not exist"
+          exit 1
+        fi
+        if [ ! -f "LICENSE-windows-x64.zip" ]; then
+          echo "LICENSE-windows-x64.zip does not exist"
+          exit 1
+        fi
