@@ -1,5 +1,11 @@
 # Changes
 
+# [1.2.1](https://github.com/prantlf/unshelve-output-action/compare/v1.2.0...v1.2.1) (2023-10-21)
+
+## Bug Fixes
+
+* Correct inputs for choosing the platfoms to unshelve ([5ae2368](https://github.com/prantlf/unshelve-output-action/commit/5ae2368cb74991ed89cea3c2147a106ac177b3f4))
+
 # [1.2.0](https://github.com/prantlf/unshelve-output-action/compare/v1.1.0...v1.2.0) (2023-10-21)
 
 ## Features
