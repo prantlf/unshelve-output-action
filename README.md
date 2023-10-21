@@ -50,7 +50,7 @@ The name of the archive without the platform and architecture and without the `.
 Type: `Boolean`<br>
 Default: `true`
 
-Can be set to `false` to prevent this action from packing the archive. It's helpful in the pipeline, which will not continue releasing, but only building and testing, and that will be decided in the middle of a job execution.
+Can be set to `false` to prevent this action from downloading the archives. It's helpful in the pipeline, which will not continue releasing, but only building and testing, and that will be decided in the middle of a job execution.
 
 ## License
 
