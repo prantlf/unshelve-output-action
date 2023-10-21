@@ -14,6 +14,15 @@ inputs:
     description: >-
       Can be set to `false` to prevent this action from downloading the archives. It's helpful in the pipeline, which will not continue releasing, but only building and testing, and that will be decided in the middle of a job execution.
     default: true
+  include-linux:
+    description: Include the archive for Linux.
+    default: true
+  include-macos:
+    description: Include the archive for macOS.
+    default: true
+  include-windows:
+    description: Include the archive for Windows.
+    default: true
 
 runs:
   using: 'composite'
@@ -39,7 +48,7 @@ runs:
       fi
       echo "name=$SO_NAME" >> $GITHUB_OUTPUT
   - name: Extract Linux archive from cache
-    if: ${{ inputs.enable }}
+    if: ${{ inputs.enable && inputs.include-linux }}
     uses: actions/cache/restore@v3
     with:
       path: ${{ steps.setup-unshelve.outputs.name }}-linux-x64.zip
@@ -47,7 +56,7 @@ runs:
       fail-on-cache-miss: true
       enableCrossOsArchive: true
   - name: Extract macOS archive from cache
-    if: ${{ inputs.enable }}
+    if: ${{ inputs.enable && inputs.include-macos }}
     uses: actions/cache/restore@v3
     with:
       path: ${{ steps.setup-unshelve.outputs.name }}-macos-x64.zip
@@ -55,7 +64,7 @@ runs:
       fail-on-cache-miss: true
       enableCrossOsArchive: true
   - name: Extract Windows archive from cache
-    if: ${{ inputs.enable }}
+    if: ${{ inputs.enable && inputs.include-windows }}
     uses: actions/cache/restore@v3
     with:
       path: ${{ steps.setup-unshelve.outputs.name }}-windows-x64.zip

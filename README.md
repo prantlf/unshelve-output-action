@@ -52,6 +52,27 @@ Default: `true`
 
 Can be set to `false` to prevent this action from downloading the archives. It's helpful in the pipeline, which will not continue releasing, but only building and testing, and that will be decided in the middle of a job execution.
 
+### include-linux
+
+Type: `Boolean`<br>
+Default: `true`
+
+Include the archive for Linux.
+
+### include-macos
+
+Type: `Boolean`<br>
+Default: `true`
+
+Include the archive for macOS.
+
+### include-windows
+
+Type: `Boolean`<br>
+Default: `true`
+
+Include the archive for Windows.
+
 ## License
 
 Copyright (C) 2023 Ferdinand Prantl
