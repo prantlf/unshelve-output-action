@@ -12,7 +12,7 @@ Download archives with binary executables produced on each platform and shelved 
 - uses: prantlf/unshelve-output-action@v1
 ```
 
-Depending on the `name` of the executable, it will download one of the following archives from he cache. For example, for the name `newchanges`:
+Depending on the `name` of the executable, it will download the following archives from the cache. For example, for the name `newchanges`:
 
 |    OS   |            Archive           |            Cache Key               |
 |:--------|:-----------------------------|:-----------------------------------|
@@ -20,9 +20,9 @@ Depending on the `name` of the executable, it will download one of the following
 | macOS   | `newchanges-macos-x64.zip`   | `newchanges-macos-x64.zip-{sha}`   |
 | Windows | `newchanges-windows-x64.zip` | `newchanges-windows-x64.zip-{sha}` |
 
-The name prefix of the archive can be specified by `name`. If not specified, it will be inferred from the project configuration (`v.mod`).
+The name prefix of the archives can be specified by `name`. If not specified, it will be inferred from the project configuration (`v.mod`).
 
-Use a different name, platform and architecture that defaults in the package archive name. Specify a custom path to the binary:
+Use a different name prefix than the default in the package archive name:
 
 ```yml
 jobs:
