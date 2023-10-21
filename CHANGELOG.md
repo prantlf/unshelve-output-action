@@ -1,5 +1,11 @@
 # Changes
 
+# [1.1.0](https://github.com/prantlf/unshelve-output-action/compare/v1.0.1...v1.1.0) (2023-10-21)
+
+## Features
+
+* Add input "enable" to optionally skip this action ([69f6571](https://github.com/prantlf/unshelve-output-action/commit/69f65710b65b09696f311f9ba553f4bf6d5f24d8))
+
 # [1.0.1](https://github.com/prantlf/unshelve-output-action/compare/v1.0.0...v1.0.1) (2023-10-18)
 
 ## Bug Fixes
