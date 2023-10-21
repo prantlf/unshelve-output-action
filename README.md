@@ -20,7 +20,7 @@ Depending on the `name` of the executable, it will download the following archiv
 | macOS   | `newchanges-macos-x64.zip`   | `newchanges-macos-x64.zip-{sha}`   |
 | Windows | `newchanges-windows-x64.zip` | `newchanges-windows-x64.zip-{sha}` |
 
-The name prefix of the archives can be specified by `name`. If not specified, it will be inferred from the project configuration (`v.mod`).
+The name prefix of the archives can be specified by `name`. If not specified, it will be inferred from the project configuration (`v.mod`). The `{sha}` in the cache key is the SHA-1 hash of the current commit.
 
 Use a different name prefix than the default in the package archive name:
 
