@@ -1,5 +1,15 @@
 # Changes
 
+# [3.0.0](https://github.com/prantlf/unshelve-output-action/compare/v2.0.0...v3.0.0) (2023-10-22)
+
+## Features
+
+* Prefer discarding the shelved archive from cache automatically ([60d2883](https://github.com/prantlf/unshelve-output-action/commit/60d28839747b6775f2b4fc8dfde93d06eb22e7a0))
+
+## BREAKING CHANGES
+
+If you used discard-shelf-action together with this one earlier, you do not have to any more. The shelved archives are discarded from the cache from now on. If you want to prevent it, set the input `discard-shelf` to `false`.
+
 # [2.0.0](https://github.com/prantlf/unshelve-output-action/compare/v1.2.1...v2.0.0) (2023-10-22)
 
 ## Features
