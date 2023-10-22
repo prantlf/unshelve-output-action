@@ -22,7 +22,7 @@ Depending on the `name` of the executable, it will download the following archiv
 
 The name prefix of the archives can be specified by `name`. If not specified, it will be inferred from the project configuration (`v.mod`). The `{sha}` in the cache key is the SHA-1 hash of the current commit.
 
-Use a different name prefix than the default in the package archive name:
+Use a different name prefix than the default in the package archive name. Work only in specific release branches:
 
 ```yml
 jobs:
@@ -32,6 +32,7 @@ jobs:
     - uses: prantlf/unshelve-output-action@v1
       with:
         name: vpm
+        branches: master v1.x
 ```
 
 ## Inputs
@@ -44,6 +45,13 @@ Type: `String`<br>
 Default: (read from `v.mod`)
 
 The name of the archive without the platform and architecture and without the `.zip` extension. The project name from `v.mod` will be used by default. The expected names of the archives will be `{name}-{os}-{arch}.zip`, for example: `newchanges-linux-x64.zip`.
+
+### branches
+
+Type: `String`<br>
+Default: `'main master'`
+
+Branches which this action should run for, which are used to publishing releases. Use whitespace for separating the branch names. If you want to use multiple lines in YAML, introduce them with ">-". If you want to allow all branches, set the value to "*".
 
 ### enable
 
