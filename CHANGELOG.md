@@ -1,5 +1,15 @@
 # Changes
 
+# [2.0.0](https://github.com/prantlf/unshelve-output-action/compare/v1.2.1...v2.0.0) (2023-10-22)
+
+## Features
+
+* Run only in specified branches ([9a6e59e](https://github.com/prantlf/unshelve-output-action/commit/9a6e59e8a424f7a9827ff5b7b92c443d867e8d08))
+
+## BREAKING CHANGES
+
+If you used this action for branches `main` or `master`, your configuration will continue working, because those branches are enabled by default. If you used it for other branches, specify all their names in the input `branches`. If you used this action on all branches, set the input `branches` to `*`.
+
 # [1.2.1](https://github.com/prantlf/unshelve-output-action/compare/v1.2.0...v1.2.1) (2023-10-21)
 
 ## Bug Fixes
