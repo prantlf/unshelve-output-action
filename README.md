@@ -6,7 +6,7 @@ Only platforms Linux, macOS, Windows on the architecture X64 are supported.
 
 ## Usage
 
-Download archives with binary executables produced on each platform and shelved earlier to the project root:
+Download archives with binary executables produced on each platform and shelved earlier to the project root and delete the shelf from the cache:
 
 ```yml
 - uses: prantlf/unshelve-output-action@v2
@@ -22,7 +22,7 @@ Depending on the `name` of the executable, it will download the following archiv
 
 The name prefix of the archives can be specified by `name`. If not specified, it will be inferred from the project configuration (`v.mod`). The `{sha}` in the cache key is the SHA-1 hash of the current commit.
 
-Use a different name prefix than the default in the package archive name. Work only in specific release branches:
+Use a different name prefix than the default in the package archive name. Work only in specific release branches. Prevent deletion the shelf from the cache:
 
 ```yml
 jobs:
@@ -33,6 +33,7 @@ jobs:
       with:
         name: vpm
         branches: master v1.x
+        discard-shelf: false
 ```
 
 ## Inputs
@@ -80,6 +81,13 @@ Type: `Boolean`<br>
 Default: `true`
 
 Include the archive for Windows.
+
+### discard-shelf
+
+Type: `Boolean`<br>
+Default: `true`
+
+Can be set to `false` to prevent automatic discarding of the shelved files from the cache.
 
 ## License
 

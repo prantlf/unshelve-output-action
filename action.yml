@@ -27,6 +27,10 @@ inputs:
   include-windows:
     description: Include the archive for Windows.
     default: true
+  discard-shelf:
+    description: >-
+      Can be set to `false` to prevent automatic discarding of the shelved files from the cache.
+    default: true
 
 runs:
   using: 'composite'
@@ -79,3 +83,18 @@ runs:
       key: ${{ steps.setup.outputs.name }}-windows-x64.zip-${{ github.sha }}
       fail-on-cache-miss: true
       enableCrossOsArchive: true
+  - name: Delete Linux archive from cache
+    if: ${{ steps.setup.outputs.enable == 'true' && inputs.include-linux == 'true' && inputs.discard-shelf == 'true' }}
+    uses: prantlf/delete-cache-action@v2
+    with:
+      key: ${{ steps.setup.outputs.name }}-linux-x64.zip-${{ github.sha }}
+  - name: Delete macOS archive from cache
+    if: ${{ steps.setup.outputs.enable == 'true' && inputs.include-macos == 'true' && inputs.discard-shelf == 'true' }}
+    uses: prantlf/delete-cache-action@v2
+    with:
+      key: ${{ steps.setup.outputs.name }}-macos-x64.zip-${{ github.sha }}
+  - name: Delete Windows archive from cache
+    if: ${{ steps.setup.outputs.enable == 'true' && inputs.include-windows == 'true' && inputs.discard-shelf == 'true' }}
+    uses: prantlf/delete-cache-action@v2
+    with:
+      key: ${{ steps.setup.outputs.name }}-windows-x64.zip-${{ github.sha }}

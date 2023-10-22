@@ -83,8 +83,10 @@ jobs:
     steps:
     - name: Checkout sources
       uses: actions/checkout@v4
-    - name: Test defaults
+    - name: Test not discarding
       uses: ./
+      with:
+        discard-shelf: false
     - name: Check archives
       shell: bash
       run: |
@@ -105,6 +107,7 @@ jobs:
       with:
         name: README
         include-windows: false
+        discard-shelf: false
     - name: Check archives
       shell: bash
       run: |
@@ -120,18 +123,47 @@ jobs:
           echo "README-windows-x64.zip does not exist"
           exit 1
         fi
-    - name: Clear Linux cache
-      uses: prantlf/delete-cache-action@v1
+    - name: Test discarding
+      uses: ./
+    - name: Delete archives
+      shell: bash
+      run: rm LICENSE-linux-x64.zip LICENSE-macos-x64.zip LICENSE-windows-x64.zip README-linux-x64.zip README-macos-x64.zip
+    - name: Restore Linux archive
+      uses: actions/cache/restore@v3
       with:
+        path: LICENSE-linux-x64.zip
         key: LICENSE-linux-x64.zip-${{ github.sha }}
-    - name: Clear macOS cache
-      uses: prantlf/delete-cache-action@v1
+        fail-on-cache-miss: false
+        enableCrossOsArchive: true
+    - name: Restore macOS archive
+      uses: actions/cache/restore@v3
       with:
+        path: LICENSE-macos-x64.zip
         key: LICENSE-macos-x64.zip-${{ github.sha }}
-    - name: Clear Windows cache
-      uses: prantlf/delete-cache-action@v1
+        fail-on-cache-miss: false
+        enableCrossOsArchive: true
+    - name: Restore Windows archive
+      uses: actions/cache/restore@v3
       with:
+        path: LICENSE-windows-x64.zip
         key: LICENSE-windows-x64.zip-${{ github.sha }}
+        fail-on-cache-miss: false
+        enableCrossOsArchive: true
+    - name: Check archives
+      shell: bash
+      run: |
+        if [ -f "LICENSE-linux-x64.zip" ]; then
+          echo "LICENSE-linux-x64.zip exists"
+          exit 1
+        fi
+        if [ -f "LICENSE-macos-x64.zip" ]; then
+          echo "LICENSE-macos-x64.zip exists"
+          exit 1
+        fi
+        if [ -f "LICENSE-windows-x64.zip" ]; then
+          echo "LICENSE-windows-x64.zip exists"
+          exit 1
+        fi
     - name: Clear second Linux cache
       uses: prantlf/delete-cache-action@v1
       with:
