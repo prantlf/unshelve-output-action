@@ -1,5 +1,17 @@
 # Changes
 
+# [4.0.0](https://github.com/prantlf/unshelve-output-action/compare/v3.0.0...v4.0.0) (2023-11-13)
+
+## Features
+
+* Include ARM64 architecture for macOS os ([67c8547](https://github.com/prantlf/unshelve-output-action/commit/67c8547222a63c3061db4a154b08e9c3cc727dd3))
+
+## BREAKING CHANGES
+
+The ARM64 architectrure for macOS os is included by
+default. If you do not produce for it, disable it by adding an input
+boolean `include-macos-arm64: false` to the `with` object.
+
 # [3.0.0](https://github.com/prantlf/unshelve-output-action/compare/v2.0.0...v3.0.0) (2023-10-22)
 
 ## Features
