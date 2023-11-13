@@ -9,31 +9,33 @@ Only platforms Linux, macOS, Windows on the architecture X64 are supported.
 Download archives with binary executables produced on each platform and shelved earlier to the project root and delete the shelf from the cache:
 
 ```yml
-- uses: prantlf/unshelve-output-action@v3
+- uses: prantlf/unshelve-output-action@v4
 ```
 
 Depending on the `name` of the executable, it will download the following archives from the cache. For example, for the name `newchanges`:
 
-|    OS   |            Archive           |            Cache Key               |
-|:--------|:-----------------------------|:-----------------------------------|
-| Linux   | `newchanges-linux-x64.zip`   | `newchanges-linux-x64.zip-{sha}`   |
-| macOS   | `newchanges-macos-x64.zip`   | `newchanges-macos-x64.zip-{sha}`   |
-| Windows | `newchanges-windows-x64.zip` | `newchanges-windows-x64.zip-{sha}` |
+|    OS   | Architecture |            Archive           |            Cache Key               |
+|:--------|:-------------|:-----------------------------|:-----------------------------------|
+| Linux   |      X64     | `newchanges-linux-x64.zip`   | `newchanges-linux-x64.zip-{sha}`   |
+| macOS   |     ARM64    | `newchanges-macos-arm64.zip` | `newchanges-macos-arm64.zip-{sha}` |
+| macOS   |      X64     | `newchanges-macos-x64.zip`   | `newchanges-macos-x64.zip-{sha}`   |
+| Windows |      X64     | `newchanges-windows-x64.zip` | `newchanges-windows-x64.zip-{sha}` |
 
 The name prefix of the archives can be specified by `name`. If not specified, it will be inferred from the project configuration (`v.mod`). The `{sha}` in the cache key is the SHA-1 hash of the current commit.
 
-Use a different name prefix than the default in the package archive name. Work only in specific release branches. Prevent deletion the shelf from the cache:
+Use a different name prefix than the default in the package archive name. Work only in specific release branches. Prevent deletion the shelf from the cache. Ignore the archive for macOS ARM64:
 
 ```yml
 jobs:
   release:
     steps:
     ...
-    - uses: prantlf/unshelve-output-action@v3
+    - uses: prantlf/unshelve-output-action@v4
       with:
         name: vpm
         branches: master v1.x
         discard-shelf: false
+        include-macos-arm64: false
 ```
 
 ## Inputs
@@ -73,7 +75,21 @@ Include the archive for Linux.
 Type: `Boolean`<br>
 Default: `true`
 
-Include the archive for macOS.
+Include archives for macOS ARM64 and X64.
+
+### include-macos-arm64
+
+Type: `Boolean`<br>
+Default: `true`
+
+Include the archive for macOS ARM64.
+
+### include-macos-x64
+
+Type: `Boolean`<br>
+Default: `true`
+
+Include the archive for macOS X64.
 
 ### include-windows
 

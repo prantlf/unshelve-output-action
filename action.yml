@@ -22,7 +22,13 @@ inputs:
     description: Include the archive for Linux.
     default: true
   include-macos:
-    description: Include the archive for macOS.
+    description: Include archives for macOS ARM64 and X64.
+    default: true
+  include-macos-arm64:
+    description: Include the archive for macOS ARM64.
+    default: true
+  include-macos-x64:
+    description: Include the archive for macOS X64.
     default: true
   include-windows:
     description: Include the archive for Windows.
@@ -67,8 +73,16 @@ runs:
       key: ${{ steps.setup.outputs.name }}-linux-x64.zip-${{ github.sha }}
       fail-on-cache-miss: true
       enableCrossOsArchive: true
-  - name: Extract macOS archive from cache
-    if: ${{ steps.setup.outputs.enable == 'true' && inputs.include-macos == 'true' }}
+  - name: Extract macOS ARM64 archive from cache
+    if: ${{ steps.setup.outputs.enable == 'true' && inputs.include-macos == 'true' && inputs.include-macos-arm64 == 'true' }}
+    uses: actions/cache/restore@v3
+    with:
+      path: ${{ steps.setup.outputs.name }}-macos-arm64.zip
+      key: ${{ steps.setup.outputs.name }}-macos-arm64.zip-${{ github.sha }}
+      fail-on-cache-miss: true
+      enableCrossOsArchive: true
+  - name: Extract macOS X64 archive from cache
+    if: ${{ steps.setup.outputs.enable == 'true' && inputs.include-macos == 'true' && inputs.include-macos-x64 == 'true' }}
     uses: actions/cache/restore@v3
     with:
       path: ${{ steps.setup.outputs.name }}-macos-x64.zip
