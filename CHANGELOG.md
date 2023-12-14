@@ -1,5 +1,17 @@
 # Changes
 
+# [5.0.0](https://github.com/prantlf/unshelve-output-action/compare/v4.0.0...v5.0.0) (2023-12-14)
+
+## Features
+
+* Enable support for Linux ARM64 ([c9e8320](https://github.com/prantlf/unshelve-output-action/commit/c9e8320a4f86b98b441ef5258b2af294b37a814d))
+
+## BREAKING CHANGES
+
+Packages ending with -linux-arm64.zip will be
+downloaded by default. If you do not produce them, prevent the
+failure by setting the input `include-linux-arm64` to `false`.
+
 # [4.0.0](https://github.com/prantlf/unshelve-output-action/compare/v3.0.0...v4.0.0) (2023-11-13)
 
 ## Features
