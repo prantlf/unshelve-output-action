@@ -9,13 +9,14 @@ Only platforms Linux, macOS, Windows on the architecture X64 are supported.
 Download archives with binary executables produced on each platform and shelved earlier to the project root and delete the shelf from the cache:
 
 ```yml
-- uses: prantlf/unshelve-output-action@v4
+- uses: prantlf/unshelve-output-action@v5
 ```
 
 Depending on the `name` of the executable, it will download the following archives from the cache. For example, for the name `newchanges`:
 
 |    OS   | Architecture |            Archive           |            Cache Key               |
 |:--------|:-------------|:-----------------------------|:-----------------------------------|
+| Linux   |     ARM64    | `newchanges-linux-arm64.zip` | `newchanges-linux-arm64.zip-{sha}` |
 | Linux   |      X64     | `newchanges-linux-x64.zip`   | `newchanges-linux-x64.zip-{sha}`   |
 | macOS   |     ARM64    | `newchanges-macos-arm64.zip` | `newchanges-macos-arm64.zip-{sha}` |
 | macOS   |      X64     | `newchanges-macos-x64.zip`   | `newchanges-macos-x64.zip-{sha}`   |
@@ -30,7 +31,7 @@ jobs:
   release:
     steps:
     ...
-    - uses: prantlf/unshelve-output-action@v4
+    - uses: prantlf/unshelve-output-action@v5
       with:
         name: vpm
         branches: master v1.x
@@ -68,7 +69,21 @@ Can be set to `false` to prevent this action from downloading the archives. It's
 Type: `Boolean`<br>
 Default: `true`
 
-Include the archive for Linux.
+Include the archive for Linux ARM64 and X64.
+
+### include-linux-arm64
+
+Type: `Boolean`<br>
+Default: `true`
+
+Include the archive for Linux ARM64.
+
+### include-linux-x64
+
+Type: `Boolean`<br>
+Default: `true`
+
+Include the archive for Linux X64.
 
 ### include-macos
 

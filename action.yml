@@ -19,7 +19,13 @@ inputs:
       Can be set to `false` to prevent this action from downloading the archives. It's helpful in the pipeline, which will not continue releasing, but only building and testing, and that will be decided in the middle of a job execution.
     default: true
   include-linux:
-    description: Include the archive for Linux.
+    description: Include the archive for Linux ARM64 and X64.
+    default: true
+  include-linux-arm64:
+    description: Include the archive for Linux ARM64.
+    default: true
+  include-linux-x64:
+    description: Include the archive for Linux X64.
     default: true
   include-macos:
     description: Include archives for macOS ARM64 and X64.
@@ -65,8 +71,16 @@ runs:
     run: |
       echo "::error title=⛔ Unsupported platform or architecture: $UO_PLAT-$UO_ARCH error hint::Supported are Linux, macOS, Windows on X64"
       exit 1
-  - name: Extract Linux archive from cache
-    if: ${{ steps.setup.outputs.enable == 'true' && inputs.include-linux == 'true' }}
+  - name: Extract Linux ARM64 archive from cache
+    if: ${{ steps.setup.outputs.enable == 'true' && inputs.include-linux == 'true' && inputs.include-linux-arm64 == 'true' }}
+    uses: actions/cache/restore@v3
+    with:
+      path: ${{ steps.setup.outputs.name }}-linux-arm64.zip
+      key: ${{ steps.setup.outputs.name }}-linux-arm64.zip-${{ github.sha }}
+      fail-on-cache-miss: true
+      enableCrossOsArchive: true
+  - name: Extract Linux X64 archive from cache
+    if: ${{ steps.setup.outputs.enable == 'true' && inputs.include-linux == 'true' && inputs.include-linux-x64 == 'true' }}
     uses: actions/cache/restore@v3
     with:
       path: ${{ steps.setup.outputs.name }}-linux-x64.zip
