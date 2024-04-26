@@ -1,5 +1,11 @@
 # Changes
 
+# [5.0.1](https://github.com/prantlf/unshelve-output-action/compare/v5.0.0...v5.0.1) (2024-04-26)
+
+## Bug Fixes
+
+* Enable ARM on Linux and macOS ([3163765](https://github.com/prantlf/unshelve-output-action/commit/316376514694b5d55e6a947d2863a70782712da6))
+
 # [5.0.0](https://github.com/prantlf/unshelve-output-action/compare/v4.0.0...v5.0.0) (2023-12-14)
 
 ## Features
