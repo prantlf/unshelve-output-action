@@ -37,7 +37,7 @@ jobs:
         enableCrossOsArchive: true
 
   macos:
-    runs-on: macos-latest
+    runs-on: macos-13
     steps:
     - name: Checkout sources
       uses: actions/checkout@v4
@@ -79,7 +79,7 @@ jobs:
       - linux
       - macos
       - windows
-    runs-on: ubuntu-latest
+    runs-on: macos-13
     steps:
     - name: Checkout sources
       uses: actions/checkout@v4
