@@ -111,13 +111,23 @@ runs:
       key: ${{ steps.setup.outputs.name }}-windows-x64.zip-${{ github.sha }}
       fail-on-cache-miss: true
       enableCrossOsArchive: true
-  - name: Delete Linux archive from cache
-    if: ${{ steps.setup.outputs.enable == 'true' && inputs.include-linux == 'true' && inputs.discard-shelf == 'true' }}
+  - name: Delete Linux ARM64 archive from cache
+    if: ${{ steps.setup.outputs.enable == 'true' && inputs.include-linux == 'true' && inputs.include-linux-arm64 == 'true' && inputs.discard-shelf == 'true' }}
+    uses: prantlf/delete-cache-action@v2
+    with:
+      key: ${{ steps.setup.outputs.name }}-linux-arm64.zip-${{ github.sha }}
+  - name: Delete Linux X64 archive from cache
+    if: ${{ steps.setup.outputs.enable == 'true' && inputs.include-linux == 'true' && inputs.include-linux-x64 == 'true' && inputs.discard-shelf == 'true' }}
     uses: prantlf/delete-cache-action@v2
     with:
       key: ${{ steps.setup.outputs.name }}-linux-x64.zip-${{ github.sha }}
-  - name: Delete macOS archive from cache
-    if: ${{ steps.setup.outputs.enable == 'true' && inputs.include-macos == 'true' && inputs.discard-shelf == 'true' }}
+  - name: Delete macOS ARM64 archive from cache
+    if: ${{ steps.setup.outputs.enable == 'true' && inputs.include-macos == 'true' && inputs.include-macos-arm64 == 'true' && inputs.discard-shelf == 'true' }}
+    uses: prantlf/delete-cache-action@v2
+    with:
+      key: ${{ steps.setup.outputs.name }}-macos-arm64.zip-${{ github.sha }}
+  - name: Delete macOS X64 archive from cache
+    if: ${{ steps.setup.outputs.enable == 'true' && inputs.include-macos == 'true' && inputs.include-macos-x64 == 'true' && inputs.discard-shelf == 'true' }}
     uses: prantlf/delete-cache-action@v2
     with:
       key: ${{ steps.setup.outputs.name }}-macos-x64.zip-${{ github.sha }}
