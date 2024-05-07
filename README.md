@@ -122,7 +122,7 @@ Can be set to `false` to prevent automatic discarding of the shelved files from 
 
 ## License
 
-Copyright (C) 2023 Ferdinand Prantl
+Copyright (C) 2023-2024 Ferdinand Prantl
 
 Licensed under the [MIT License].
 
