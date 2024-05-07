@@ -16,21 +16,17 @@ jobs:
   linux:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout sources
-      uses: actions/checkout@v4
-    - name: Simulate test archive
-      shell: bash
-      run: |
+    - uses: actions/checkout@v4
+    - run: |
         cp LICENSE LICENSE-linux-x64.zip
         cp README.md README-linux-x64.zip
-    - name: Store test archive
-      uses: actions/cache/save@v3
+      shell: bash
+    - uses: actions/cache/save@v4
       with:
         path: LICENSE-linux-x64.zip
         key: LICENSE-linux-x64.zip-${{ github.sha }}
         enableCrossOsArchive: true
-    - name: Store second test archive
-      uses: actions/cache/save@v3
+    - uses: actions/cache/save@v4
       with:
         path: README-linux-x64.zip
         key: README-linux-x64.zip-${{ github.sha }}
@@ -39,21 +35,17 @@ jobs:
   macos:
     runs-on: macos-13
     steps:
-    - name: Checkout sources
-      uses: actions/checkout@v4
-    - name: Simulate test archive
-      shell: bash
-      run: |
+    - uses: actions/checkout@v4
+    - run: |
         cp LICENSE LICENSE-macos-x64.zip
         cp README.md README-macos-x64.zip
-    - name: Store test archive
-      uses: actions/cache/save@v3
+      shell: bash
+    - uses: actions/cache/save@v4
       with:
         path: LICENSE-macos-x64.zip
         key: LICENSE-macos-x64.zip-${{ github.sha }}
         enableCrossOsArchive: true
-    - name: Store second test archive
-      uses: actions/cache/save@v3
+    - uses: actions/cache/save@v4
       with:
         path: README-macos-x64.zip
         key: README-macos-x64.zip-${{ github.sha }}
@@ -62,13 +54,10 @@ jobs:
   windows:
     runs-on: windows-latest
     steps:
-    - name: Checkout sources
-      uses: actions/checkout@v4
-    - name: Simulate test archive
+    - uses: actions/checkout@v4
+    - run: Copy-Item "LICENSE" -Destination "LICENSE-windows-x64.zip"
       shell: powershell
-      run: Copy-Item "LICENSE" -Destination "LICENSE-windows-x64.zip"
-    - name: Store test archive
-      uses: actions/cache/save@v3
+    - uses: actions/cache/save@v4
       with:
         path: LICENSE-windows-x64.zip
         key: LICENSE-windows-x64.zip-${{ github.sha }}
@@ -81,15 +70,11 @@ jobs:
       - windows
     runs-on: macos-13
     steps:
-    - name: Checkout sources
-      uses: actions/checkout@v4
-    - name: Test not discarding
-      uses: ./
+    - uses: actions/checkout@v4
+    - uses: ./
       with:
         discard-shelf: false
-    - name: Check archives
-      shell: bash
-      run: |
+    - run: |
         if [ ! -f "LICENSE-linux-x64.zip" ]; then
           echo "LICENSE-linux-x64.zip does not exist"
           exit 1
@@ -102,15 +87,13 @@ jobs:
           echo "LICENSE-windows-x64.zip does not exist"
           exit 1
         fi
-    - name: Test custom name
-      uses: ./
+      shell: bash
+    - uses: ./
       with:
         name: README
         include-windows: false
         discard-shelf: false
-    - name: Check archives
-      shell: bash
-      run: |
+    - run: |
         if [ ! -f "README-linux-x64.zip" ]; then
           echo "README-linux-x64.zip does not exist"
           exit 1
@@ -123,35 +106,29 @@ jobs:
           echo "README-windows-x64.zip does not exist"
           exit 1
         fi
-    - name: Test discarding
-      uses: ./
-    - name: Delete archives
       shell: bash
-      run: rm LICENSE-linux-x64.zip LICENSE-macos-x64.zip LICENSE-windows-x64.zip README-linux-x64.zip README-macos-x64.zip
-    - name: Restore Linux archive
-      uses: actions/cache/restore@v3
+    - uses: ./
+    - run: rm LICENSE-linux-x64.zip LICENSE-macos-x64.zip LICENSE-windows-x64.zip README-linux-x64.zip README-macos-x64.zip
+      shell: bash
+    - uses: actions/cache/restore@v4
       with:
         path: LICENSE-linux-x64.zip
         key: LICENSE-linux-x64.zip-${{ github.sha }}
         fail-on-cache-miss: false
         enableCrossOsArchive: true
-    - name: Restore macOS archive
-      uses: actions/cache/restore@v3
+    - uses: actions/cache/restore@v4
       with:
         path: LICENSE-macos-x64.zip
         key: LICENSE-macos-x64.zip-${{ github.sha }}
         fail-on-cache-miss: false
         enableCrossOsArchive: true
-    - name: Restore Windows archive
-      uses: actions/cache/restore@v3
+    - uses: actions/cache/restore@v4
       with:
         path: LICENSE-windows-x64.zip
         key: LICENSE-windows-x64.zip-${{ github.sha }}
         fail-on-cache-miss: false
         enableCrossOsArchive: true
-    - name: Check archives
-      shell: bash
-      run: |
+    - run: |
         if [ -f "LICENSE-linux-x64.zip" ]; then
           echo "LICENSE-linux-x64.zip exists"
           exit 1
@@ -164,17 +141,15 @@ jobs:
           echo "LICENSE-windows-x64.zip exists"
           exit 1
         fi
-    - name: Clear second Linux cache
-      uses: prantlf/delete-cache-action@v1
+      shell: bash
+    - uses: prantlf/delete-cache-action@v3
       with:
         key: README-linux-x64.zip-${{ github.sha }}
-    - name: Clear second macOS cache
-      uses: prantlf/delete-cache-action@v1
+    - uses: prantlf/delete-cache-action@v3
       with:
         key: README-macos-x64.zip-${{ github.sha }}
-    - name: Publish release
+    - uses: prantlf/publish-release-action@v1
       if: ${{ github.ref_name == 'master' }}
-      uses: prantlf/publish-release-action@v1
       with:
         no-bump: true
         no-archives: true

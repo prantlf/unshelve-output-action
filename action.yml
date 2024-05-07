@@ -73,7 +73,7 @@ runs:
       exit 1
   - name: Extract Linux ARM64 archive from cache
     if: ${{ steps.setup.outputs.enable == 'true' && inputs.include-linux == 'true' && inputs.include-linux-arm64 == 'true' }}
-    uses: actions/cache/restore@v3
+    uses: actions/cache/restore@v4
     with:
       path: ${{ steps.setup.outputs.name }}-linux-arm64.zip
       key: ${{ steps.setup.outputs.name }}-linux-arm64.zip-${{ github.sha }}
@@ -81,7 +81,7 @@ runs:
       enableCrossOsArchive: true
   - name: Extract Linux X64 archive from cache
     if: ${{ steps.setup.outputs.enable == 'true' && inputs.include-linux == 'true' && inputs.include-linux-x64 == 'true' }}
-    uses: actions/cache/restore@v3
+    uses: actions/cache/restore@v4
     with:
       path: ${{ steps.setup.outputs.name }}-linux-x64.zip
       key: ${{ steps.setup.outputs.name }}-linux-x64.zip-${{ github.sha }}
@@ -89,7 +89,7 @@ runs:
       enableCrossOsArchive: true
   - name: Extract macOS ARM64 archive from cache
     if: ${{ steps.setup.outputs.enable == 'true' && inputs.include-macos == 'true' && inputs.include-macos-arm64 == 'true' }}
-    uses: actions/cache/restore@v3
+    uses: actions/cache/restore@v4
     with:
       path: ${{ steps.setup.outputs.name }}-macos-arm64.zip
       key: ${{ steps.setup.outputs.name }}-macos-arm64.zip-${{ github.sha }}
@@ -97,7 +97,7 @@ runs:
       enableCrossOsArchive: true
   - name: Extract macOS X64 archive from cache
     if: ${{ steps.setup.outputs.enable == 'true' && inputs.include-macos == 'true' && inputs.include-macos-x64 == 'true' }}
-    uses: actions/cache/restore@v3
+    uses: actions/cache/restore@v4
     with:
       path: ${{ steps.setup.outputs.name }}-macos-x64.zip
       key: ${{ steps.setup.outputs.name }}-macos-x64.zip-${{ github.sha }}
@@ -105,7 +105,7 @@ runs:
       enableCrossOsArchive: true
   - name: Extract Windows archive from cache
     if: ${{ steps.setup.outputs.enable == 'true' && inputs.include-windows == 'true' }}
-    uses: actions/cache/restore@v3
+    uses: actions/cache/restore@v4
     with:
       path: ${{ steps.setup.outputs.name }}-windows-x64.zip
       key: ${{ steps.setup.outputs.name }}-windows-x64.zip-${{ github.sha }}
@@ -113,26 +113,26 @@ runs:
       enableCrossOsArchive: true
   - name: Delete Linux ARM64 archive from cache
     if: ${{ steps.setup.outputs.enable == 'true' && inputs.include-linux == 'true' && inputs.include-linux-arm64 == 'true' && inputs.discard-shelf == 'true' }}
-    uses: prantlf/delete-cache-action@v2
+    uses: prantlf/delete-cache-action@v3
     with:
       key: ${{ steps.setup.outputs.name }}-linux-arm64.zip-${{ github.sha }}
   - name: Delete Linux X64 archive from cache
     if: ${{ steps.setup.outputs.enable == 'true' && inputs.include-linux == 'true' && inputs.include-linux-x64 == 'true' && inputs.discard-shelf == 'true' }}
-    uses: prantlf/delete-cache-action@v2
+    uses: prantlf/delete-cache-action@v3
     with:
       key: ${{ steps.setup.outputs.name }}-linux-x64.zip-${{ github.sha }}
   - name: Delete macOS ARM64 archive from cache
     if: ${{ steps.setup.outputs.enable == 'true' && inputs.include-macos == 'true' && inputs.include-macos-arm64 == 'true' && inputs.discard-shelf == 'true' }}
-    uses: prantlf/delete-cache-action@v2
+    uses: prantlf/delete-cache-action@v3
     with:
       key: ${{ steps.setup.outputs.name }}-macos-arm64.zip-${{ github.sha }}
   - name: Delete macOS X64 archive from cache
     if: ${{ steps.setup.outputs.enable == 'true' && inputs.include-macos == 'true' && inputs.include-macos-x64 == 'true' && inputs.discard-shelf == 'true' }}
-    uses: prantlf/delete-cache-action@v2
+    uses: prantlf/delete-cache-action@v3
     with:
       key: ${{ steps.setup.outputs.name }}-macos-x64.zip-${{ github.sha }}
   - name: Delete Windows archive from cache
     if: ${{ steps.setup.outputs.enable == 'true' && inputs.include-windows == 'true' && inputs.discard-shelf == 'true' }}
-    uses: prantlf/delete-cache-action@v2
+    uses: prantlf/delete-cache-action@v3
     with:
       key: ${{ steps.setup.outputs.name }}-windows-x64.zip-${{ github.sha }}
