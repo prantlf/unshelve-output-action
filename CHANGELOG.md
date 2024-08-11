@@ -1,5 +1,18 @@
 # Changes
 
+# [7.0.0](https://github.com/prantlf/unshelve-output-action/compare/v6.0.0...v7.0.0) (2024-08-11)
+
+## Features
+
+* Delete RISCV64 archives from cache by default ([b80384b](https://github.com/prantlf/unshelve-output-action/commit/b80384b0e345c033482e6af41c82412275a0e949))
+
+## BREAKING CHANGES
+
+If you already produce the binaries for RISCV64,
+this won't be a breaking change for you. If you don't, this task will
+try deleting them by default and fail.
+You can set `include-linux-riscv64` to `false` to prevent it.
+
 # [6.0.0](https://github.com/prantlf/unshelve-output-action/compare/v5.0.1...v6.0.0) (2024-05-07)
 
 ## Features
