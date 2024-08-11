@@ -14,13 +14,14 @@ Download archives with binary executables produced on each platform and shelved 
 
 Depending on the `name` of the executable, it will download the following archives from the cache. For example, for the name `newchanges`:
 
-|    OS   | Architecture |            Archive           |            Cache Key               |
-|:--------|:-------------|:-----------------------------|:-----------------------------------|
-| Linux   |     ARM64    | `newchanges-linux-arm64.zip` | `newchanges-linux-arm64.zip-{sha}` |
-| Linux   |      X64     | `newchanges-linux-x64.zip`   | `newchanges-linux-x64.zip-{sha}`   |
-| macOS   |     ARM64    | `newchanges-macos-arm64.zip` | `newchanges-macos-arm64.zip-{sha}` |
-| macOS   |      X64     | `newchanges-macos-x64.zip`   | `newchanges-macos-x64.zip-{sha}`   |
-| Windows |      X64     | `newchanges-windows-x64.zip` | `newchanges-windows-x64.zip-{sha}` |
+|    OS   | Architecture |            Archive             |            Cache Key                 |
+|:--------|:-------------|:-------------------------------|:-------------------------------------|
+| Linux   |      X64     | `newchanges-linux-x64.zip`     | `newchanges-linux-x64.zip-{sha}`     |
+| Linux   |     ARM64    | `newchanges-linux-arm64.zip`   | `newchanges-linux-arm64.zip-{sha}`   |
+| Linux   |    RISCV64   | `newchanges-linux-riscv64.zip` | `newchanges-linux-riscv64.zip-{sha}` |
+| macOS   |     ARM64    | `newchanges-macos-arm64.zip`   | `newchanges-macos-arm64.zip-{sha}`   |
+| macOS   |      X64     | `newchanges-macos-x64.zip`     | `newchanges-macos-x64.zip-{sha}`     |
+| Windows |      X64     | `newchanges-windows-x64.zip`   | `newchanges-windows-x64.zip-{sha}`   |
 
 The name prefix of the archives can be specified by `name`. If not specified, it will be inferred from the project configuration (`v.mod`). The `{sha}` in the cache key is the SHA-1 hash of the current commit.
 
@@ -69,7 +70,7 @@ Can be set to `false` to prevent this action from downloading the archives. It's
 Type: `Boolean`<br>
 Default: `true`
 
-Include the archive for Linux ARM64 and X64.
+Include the archive for Linux ARM64, RISCV64 and X64.
 
 ### include-linux-arm64
 
@@ -77,6 +78,13 @@ Type: `Boolean`<br>
 Default: `true`
 
 Include the archive for Linux ARM64.
+
+### include-linux-riscv64
+
+Type: `Boolean`<br>
+Default: `true`
+
+Include the archive for Linux RISCV64.
 
 ### include-linux-x64
 

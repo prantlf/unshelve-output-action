@@ -20,6 +20,7 @@ jobs:
     - run: |
         cp LICENSE LICENSE-linux-x64.zip
         cp LICENSE LICENSE-linux-arm64.zip
+        cp LICENSE LICENSE-linux-riscv64.zip
         cp README.md README-linux-x64.zip
       shell: bash
     - uses: actions/cache/save@v4
@@ -31,6 +32,10 @@ jobs:
       with:
         path: LICENSE-linux-arm64.zip
         key: LICENSE-linux-arm64.zip-${{ github.sha }}
+    - uses: actions/cache/save@v4
+      with:
+        path: LICENSE-linux-riscv64.zip
+        key: LICENSE-linux-riscv64.zip-${{ github.sha }}
         enableCrossOsArchive: true
     - uses: actions/cache/save@v4
       with:
@@ -95,6 +100,10 @@ jobs:
           echo "LICENSE-linux-arm64.zip does not exist"
           exit 1
         fi
+        if [ ! -f "LICENSE-linux-riscv64.zip" ]; then
+          echo "LICENSE-linux-riscv64.zip does not exist"
+          exit 1
+        fi
         if [ ! -f "LICENSE-macos-x64.zip" ]; then
           echo "LICENSE-macos-x64.zip does not exist"
           exit 1
@@ -112,6 +121,7 @@ jobs:
       with:
         name: README
         include-linux-arm64: false
+        include-linux-riscv64: false
         include-macos-arm64: false
         include-windows: false
         discard-shelf: false
@@ -130,7 +140,7 @@ jobs:
         fi
       shell: bash
     - uses: ./
-    - run: rm LICENSE-linux-x64.zip LICENSE-linux-arm64.zip LICENSE-macos-x64.zip LICENSE-macos-arm64.zip LICENSE-windows-x64.zip README-linux-x64.zip README-macos-x64.zip
+    - run: rm LICENSE-linux-x64.zip LICENSE-linux-arm64.zip LICENSE-linux-riscv64.zip LICENSE-macos-x64.zip LICENSE-macos-arm64.zip LICENSE-windows-x64.zip README-linux-x64.zip README-macos-x64.zip
       shell: bash
     - uses: actions/cache/restore@v4
       with:
@@ -142,6 +152,12 @@ jobs:
       with:
         path: LICENSE-linux-arm64.zip
         key: LICENSE-linux-arm64.zip-${{ github.sha }}
+        fail-on-cache-miss: false
+        enableCrossOsArchive: true
+    - uses: actions/cache/restore@v4
+      with:
+        path: LICENSE-linux-riscv64.zip
+        key: LICENSE-linux-riscv64.zip-${{ github.sha }}
         fail-on-cache-miss: false
         enableCrossOsArchive: true
     - uses: actions/cache/restore@v4
@@ -169,6 +185,10 @@ jobs:
         fi
         if [ -f "LICENSE-linux-arm64.zip" ]; then
           echo "LICENSE-linux-arm64.zip exists"
+          exit 1
+        fi
+        if [ -f "LICENSE-linux-riscv64.zip" ]; then
+          echo "LICENSE-linux-riscv64.zip exists"
           exit 1
         fi
         if [ -f "LICENSE-macos-x64.zip" ]; then
