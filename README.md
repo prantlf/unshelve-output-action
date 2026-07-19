@@ -9,7 +9,7 @@ Only platforms Linux, macOS, Windows on the architecture X64 are supported.
 Download archives with binary executables produced on each platform and shelved earlier to the project root and delete the shelf from the cache:
 
 ```yml
-- uses: prantlf/unshelve-output-action@v5
+- uses: prantlf/unshelve-output-action@v8
 ```
 
 Depending on the `name` of the executable, it will download the following archives from the cache. For example, for the name `newchanges`:
@@ -32,12 +32,19 @@ jobs:
   release:
     steps:
     ...
-    - uses: prantlf/unshelve-output-action@v5
+    - uses: prantlf/unshelve-output-action@v8
       with:
         name: vpm
         branches: master v1.x
         discard-shelf: false
         include-macos-arm64: false
+```
+
+**Attention**: Make sure that you grant the write permission for actions in the job or workflow, which uses this action:
+
+```yml
+permissions:
+  actions: write
 ```
 
 ## Inputs

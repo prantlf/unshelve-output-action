@@ -12,57 +12,56 @@ on:
   pull_request:
 
 jobs:
-
   linux:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
     - run: |
         cp LICENSE LICENSE-linux-x64.zip
         cp LICENSE LICENSE-linux-arm64.zip
         cp LICENSE LICENSE-linux-riscv64.zip
         cp README.md README-linux-x64.zip
       shell: bash
-    - uses: actions/cache/save@v4
+    - uses: actions/cache/save@v6
       with:
         path: LICENSE-linux-x64.zip
         key: LICENSE-linux-x64.zip-${{ github.sha }}
         enableCrossOsArchive: true
-    - uses: actions/cache/save@v4
+    - uses: actions/cache/save@v6
       with:
         path: LICENSE-linux-arm64.zip
         key: LICENSE-linux-arm64.zip-${{ github.sha }}
-    - uses: actions/cache/save@v4
+    - uses: actions/cache/save@v6
       with:
         path: LICENSE-linux-riscv64.zip
         key: LICENSE-linux-riscv64.zip-${{ github.sha }}
         enableCrossOsArchive: true
-    - uses: actions/cache/save@v4
+    - uses: actions/cache/save@v6
       with:
         path: README-linux-x64.zip
         key: README-linux-x64.zip-${{ github.sha }}
         enableCrossOsArchive: true
 
   macos:
-    runs-on: macos-13
+    runs-on: macos-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
     - run: |
         cp LICENSE LICENSE-macos-x64.zip
         cp LICENSE LICENSE-macos-arm64.zip
         cp README.md README-macos-x64.zip
       shell: bash
-    - uses: actions/cache/save@v4
+    - uses: actions/cache/save@v6
       with:
         path: LICENSE-macos-x64.zip
         key: LICENSE-macos-x64.zip-${{ github.sha }}
         enableCrossOsArchive: true
-    - uses: actions/cache/save@v4
+    - uses: actions/cache/save@v6
       with:
         path: LICENSE-macos-arm64.zip
         key: LICENSE-macos-arm64.zip-${{ github.sha }}
         enableCrossOsArchive: true
-    - uses: actions/cache/save@v4
+    - uses: actions/cache/save@v6
       with:
         path: README-macos-x64.zip
         key: README-macos-x64.zip-${{ github.sha }}
@@ -71,23 +70,26 @@ jobs:
   windows:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
     - run: Copy-Item "LICENSE" -Destination "LICENSE-windows-x64.zip"
       shell: powershell
-    - uses: actions/cache/save@v4
+    - uses: actions/cache/save@v6
       with:
         path: LICENSE-windows-x64.zip
         key: LICENSE-windows-x64.zip-${{ github.sha }}
         enableCrossOsArchive: true
 
   test-and-release:
+    permissions:
+      actions: write
+      contents: write
     needs:
       - linux
       - macos
       - windows
-    runs-on: macos-13
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v7
     - uses: ./
       with:
         discard-shelf: false
@@ -142,37 +144,37 @@ jobs:
     - uses: ./
     - run: rm LICENSE-linux-x64.zip LICENSE-linux-arm64.zip LICENSE-linux-riscv64.zip LICENSE-macos-x64.zip LICENSE-macos-arm64.zip LICENSE-windows-x64.zip README-linux-x64.zip README-macos-x64.zip
       shell: bash
-    - uses: actions/cache/restore@v4
+    - uses: actions/cache/restore@v6
       with:
         path: LICENSE-linux-x64.zip
         key: LICENSE-linux-x64.zip-${{ github.sha }}
         fail-on-cache-miss: false
         enableCrossOsArchive: true
-    - uses: actions/cache/restore@v4
+    - uses: actions/cache/restore@v6
       with:
         path: LICENSE-linux-arm64.zip
         key: LICENSE-linux-arm64.zip-${{ github.sha }}
         fail-on-cache-miss: false
         enableCrossOsArchive: true
-    - uses: actions/cache/restore@v4
+    - uses: actions/cache/restore@v6
       with:
         path: LICENSE-linux-riscv64.zip
         key: LICENSE-linux-riscv64.zip-${{ github.sha }}
         fail-on-cache-miss: false
         enableCrossOsArchive: true
-    - uses: actions/cache/restore@v4
+    - uses: actions/cache/restore@v6
       with:
         path: LICENSE-macos-x64.zip
         key: LICENSE-macos-x64.zip-${{ github.sha }}
         fail-on-cache-miss: false
         enableCrossOsArchive: true
-    - uses: actions/cache/restore@v4
+    - uses: actions/cache/restore@v6
       with:
         path: LICENSE-macos-arm64.zip
         key: LICENSE-macos-arm64.zip-${{ github.sha }}
         fail-on-cache-miss: false
         enableCrossOsArchive: true
-    - uses: actions/cache/restore@v4
+    - uses: actions/cache/restore@v6
       with:
         path: LICENSE-windows-x64.zip
         key: LICENSE-windows-x64.zip-${{ github.sha }}
@@ -204,13 +206,13 @@ jobs:
           exit 1
         fi
       shell: bash
-    - uses: prantlf/delete-cache-action@v3
+    - uses: prantlf/delete-cache-action@v4
       with:
         key: README-linux-x64.zip-${{ github.sha }}
-    - uses: prantlf/delete-cache-action@v3
+    - uses: prantlf/delete-cache-action@v4
       with:
         key: README-macos-x64.zip-${{ github.sha }}
-    - uses: prantlf/publish-release-action@v1
+    - uses: prantlf/publish-release-action@v2
       if: ${{ github.ref_name == 'master' }}
       with:
         no-bump: true
