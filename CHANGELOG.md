@@ -1,5 +1,15 @@
 # Changes
 
+# [8.0.0](https://github.com/prantlf/unshelve-output-action/compare/v7.0.0...v8.0.0) (2026-07-19)
+
+## Features
+
+* Upgrade dependencies ([cd79bfe](https://github.com/prantlf/unshelve-output-action/commit/cd79bfe2f141755ba63cf640e229bd67f4b27a6a))
+
+## BREAKING CHANGES
+
+GitHub actions which this action depends on were upgraded to their latest versions, which require Node.js 24 for running.
+
 # [7.0.0](https://github.com/prantlf/unshelve-output-action/compare/v6.0.0...v7.0.0) (2024-08-11)
 
 ## Features
